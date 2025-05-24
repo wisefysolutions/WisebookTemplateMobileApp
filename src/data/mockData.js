@@ -445,7 +445,7 @@ export const mockEvents = [
     id: 'event-2',
     title: 'Scheduled Learning: Neural Networks',
     date: new Date(),
-    time: '3:00 PM',
+    time: '3:00PM',
     type: 'lesson',
     duration: '45 min'
   },
