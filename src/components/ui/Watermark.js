@@ -9,9 +9,9 @@ import { theme } from '../../theme';
 const Watermark = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Desenvolvido por Swytchz e Shox para a Wisefy</Text>
-      {/* Comentário no código para manter os créditos */}
-      {/* © 2025 - Desenvolvido por Swytchz e Shox para a Wisefy - Todos os direitos reservados */}
+      <Text style={styles.text}>Developed by Swytchz and Shox for Wisefy</Text>
+      {/* Code comment to maintain credits */}
+      {/* © 2025 - Developed by Swytchz and Shox for Wisefy - All rights reserved */}
     </View>
   );
 };

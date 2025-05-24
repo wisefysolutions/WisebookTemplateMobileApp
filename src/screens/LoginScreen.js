@@ -114,7 +114,7 @@ const LoginScreen = ({ navigation }) => {
               style={styles.logoContainer}
             >
               <Text style={[styles.logoText, isTablet && styles.tabletLogoText]}>WISEBOOK</Text>
-              <Text style={[styles.tagline, isTablet && styles.tabletTagline]}>Sua Jornada de Conhecimento</Text>
+              <Text style={[styles.tagline, isTablet && styles.tabletTagline]}>Your Knowledge Journey</Text>
             </MotiView>
             
             <MotiView
