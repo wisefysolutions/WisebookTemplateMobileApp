@@ -61,23 +61,27 @@ const OnboardingScreen = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef(null);
   
+  const navigateToLogin = () => {
+    // Usando setTimeout para evitar problemas de timing na navegação
+    setTimeout(() => {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }],
+      });
+    }, 100);
+  };
+  
   const handleNext = () => {
     if (currentIndex < onboardingData.length - 1) {
       flatListRef.current?.scrollToIndex({ index: currentIndex + 1, animated: true });
       setCurrentIndex(currentIndex + 1);
     } else {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Login' }],
-      });
+      navigateToLogin();
     }
   };
   
   const handleSkip = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Login' }],
-    });
+    navigateToLogin();
   };
   
   const handleScrollEnd = (e) => {
@@ -88,38 +92,9 @@ const OnboardingScreen = ({ navigation }) => {
   };
   
   const renderOnboardingItem = ({ item, index }) => {
-    const inputRange = [
-      (index - 1) * width,
-      index * width,
-      (index + 1) * width
-    ];
-    
-    const translateY = scrollX.interpolate({
-      inputRange,
-      outputRange: [50, 0, 50],
-      extrapolate: 'clamp'
-    });
-    
-    const opacity = scrollX.interpolate({
-      inputRange,
-      outputRange: [0.3, 1, 0.3],
-      extrapolate: 'clamp'
-    });
-    
-    const scale = scrollX.interpolate({
-      inputRange,
-      outputRange: [0.8, 1, 0.8],
-      extrapolate: 'clamp'
-    });
-    
     return (
       <View style={styles.slideContainer}>
-        <Animated.View
-          style={[
-            styles.slideContent,
-            { opacity, transform: [{ translateY }, { scale }] }
-          ]}
-        >
+        <View style={styles.slideContent}>
           <View style={styles.iconContainer}>
             <Feather name={item.icon} size={50} color="#fff" />
             
@@ -131,7 +106,7 @@ const OnboardingScreen = ({ navigation }) => {
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.subtitle}>{item.subtitle}</Text>
           <Text style={styles.description}>{item.description}</Text>
-        </Animated.View>
+        </View>
       </View>
     );
   };
@@ -190,11 +165,13 @@ const OnboardingScreen = ({ navigation }) => {
         >
           <Text style={styles.headerTitle}>WISEBOOK</Text>
           
-          {currentIndex < onboardingData.length - 1 && (
-            <TouchableOpacity onPress={handleSkip}>
-              <Text style={styles.skipButton}>Skip</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity 
+            onPress={handleSkip}
+            style={styles.skipButtonContainer}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.skipButton}>Skip</Text>
+          </TouchableOpacity>
         </MotiView>
         
         {/* Background Decorations */}
@@ -304,9 +281,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     letterSpacing: 2,
   },
+  skipButtonContainer: {
+    padding: 10,
+    paddingHorizontal: 15,
+  },
   skipButton: {
     color: 'rgba(255,255,255,0.8)',
     fontSize: 16,
+    fontWeight: '500',
   },
   backgroundDecorations: {
     ...StyleSheet.absoluteFillObject,
@@ -346,8 +328,10 @@ const styles = StyleSheet.create({
   },
   slideContent: {
     alignItems: 'center',
-    paddingHorizontal: 40,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
     width: '90%',
+    maxWidth: 400,
   },
   iconContainer: {
     width: 120,
@@ -375,23 +359,26 @@ const styles = StyleSheet.create({
     height: 100,
   },
   title: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 8,
+    width: '100%',
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 16,
     color: 'rgba(255,255,255,0.8)',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 16,
+    width: '100%',
   },
   description: {
-    fontSize: 16,
+    fontSize: 14,
     color: 'rgba(255,255,255,0.7)',
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 22,
+    width: '100%',
   },
   bottomControls: {
     paddingBottom: 50,
