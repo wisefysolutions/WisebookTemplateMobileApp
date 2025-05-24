@@ -8,7 +8,8 @@ import {
   KeyboardAvoidingView, 
   Platform,
   Image,
-  Dimensions
+  Dimensions,
+  ScrollView
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -36,27 +37,32 @@ const LoginScreen = ({ navigation }) => {
     setIsLoading(true);
     setError('');
     
-    // Simulate API call
-    setTimeout(async () => {
-      try {
-        // For demo purposes, any login attempt is successful
-        const userData = {
-          id: '1',
-          name: 'Demo User',
-          email: email,
-          avatar: null,
-          level: 8,
-          xp: 320
-        };
-        
-        // Save user to storage and store
-        await saveToStorage('user', userData);
-        setUser(userData);
-      } catch (error) {
-        setError('Login failed. Please try again.');
-        setIsLoading(false);
-      }
-    }, 1500);
+    // Simulate API call - using a simpler approach to ensure it works on all platforms
+    try {
+      // Short delay to simulate network
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // For demo purposes, any login attempt is successful
+      const userData = {
+        id: '1',
+        name: 'Demo User',
+        email: email || 'demo@wisebook.app',
+        avatar: null,
+        level: 8,
+        xp: 320
+      };
+      
+      // Save user to storage and store
+      await saveToStorage('user', userData);
+      setUser(userData);
+      
+      // Navigate programmatically (more reliable than letting the store trigger it)
+      // navigation.navigate('Tabs');
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('Login failed. Please try again.');
+      setIsLoading(false);
+    }
   };
   
   const handleSignUp = () => {
@@ -230,13 +236,7 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-const ScrollView = ({ children, contentContainerStyle }) => {
-  return (
-    <View style={contentContainerStyle}>
-      {children}
-    </View>
-  );
-};
+// Using the actual ScrollView component from react-native
 
 const styles = StyleSheet.create({
   container: {

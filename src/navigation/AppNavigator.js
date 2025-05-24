@@ -9,7 +9,7 @@ import LoginScreen from '../screens/LoginScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import { useStore } from '../store/useStore';
 import { theme } from '../theme';
-import { loadFromStorage } from '../services/storage';
+import { loadFromStorage, saveToStorage } from '../services/storage';
 
 const Stack = createStackNavigator();
 
@@ -35,10 +35,20 @@ const AppNavigator = () => {
   useEffect(() => {
     async function checkUserAuth() {
       try {
-        const userData = await loadFromStorage('user');
-        if (userData) {
-          setUser(userData);
-        }
+        // Create a demo user automatically for testing purposes
+        const demoUser = {
+          id: '1',
+          name: 'Demo User',
+          email: 'demo@wisebook.app',
+          avatar: null,
+          level: 8,
+          xp: 320
+        };
+        
+        // Auto-login with demo user
+        setUser(demoUser);
+        await saveToStorage('user', demoUser);
+        console.log('Auto-logged in with demo user');
       } catch (error) {
         console.error('Error checking auth state:', error);
       } finally {
@@ -46,7 +56,10 @@ const AppNavigator = () => {
       }
     }
     
-    checkUserAuth();
+    // Short delay before auto-login
+    setTimeout(() => {
+      checkUserAuth();
+    }, 1000);
   }, []);
   
   if (loading) {

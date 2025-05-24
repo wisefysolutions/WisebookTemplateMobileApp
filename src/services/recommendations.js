@@ -2,10 +2,20 @@ import OpenAI from 'openai';
 import { mockContents, mockUserStats, mockPaths } from '../data/mockData';
 
 // Initialize OpenAI client
-const openai = new OpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY || 'sk-demo-key',
-  dangerouslyAllowBrowser: true // Enable browser usage
-});
+// Using a safer approach to prevent browser-related errors
+let openai;
+try {
+  // Only initialize if we have a valid key and are in the right environment
+  if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.startsWith('sk-')) {
+    openai = new OpenAI({ 
+      apiKey: process.env.OPENAI_API_KEY,
+      dangerouslyAllowBrowser: true // Enable browser usage 
+    });
+  }
+} catch (error) {
+  console.log('OpenAI initialization issue:', error);
+  // Will use fallback recommendations if initialization fails
+}
 
 // Helper function to get user's learning history and preferences
 const getUserLearningProfile = async (userId) => {
