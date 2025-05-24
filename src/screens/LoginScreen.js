@@ -90,13 +90,7 @@ const LoginScreen = ({ navigation }) => {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.keyboardAvoidView}
         >
-          {/* Elementos de fundo sutis */}
-          <MotiView
-            from={{ opacity: 0 }}
-            animate={{ opacity: 0.1 }}
-            transition={{ type: 'timing', duration: 1000 }}
-            style={[styles.circleDecoration, { top: '5%', left: '10%', width: '40%', height: '40%' }]}
-          />
+
           
           <ScrollView 
             contentContainerStyle={[
@@ -121,7 +115,7 @@ const LoginScreen = ({ navigation }) => {
               style={[styles.formContainer, isTablet && styles.tabletFormContainer]}
             >
               <View style={styles.inputContainer}>
-                <Feather name="mail" size={20} color="rgba(255,255,255,0.7)" />
+                <Feather name="mail" size={20} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Email"
@@ -135,7 +129,7 @@ const LoginScreen = ({ navigation }) => {
               </View>
               
               <View style={styles.inputContainer}>
-                <Feather name="lock" size={20} color="rgba(255,255,255,0.7)" />
+                <Feather name="lock" size={20} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Senha"
@@ -145,7 +139,7 @@ const LoginScreen = ({ navigation }) => {
                   secureTextEntry={!showPassword}
                   accessibilityLabel="Campo de senha"
                 />
-                <TouchableOpacity onPress={togglePasswordVisibility} accessibilityLabel="Mostrar/esconder senha">
+                <TouchableOpacity onPress={togglePasswordVisibility} accessibilityLabel="Mostrar/esconder senha" style={styles.eyeButton}>
                   <Feather 
                     name={showPassword ? "eye" : "eye-off"} 
                     size={20} 
@@ -292,12 +286,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.2)',
   },
+  inputIcon: {
+    marginRight: spacing.sm,
+  },
   input: {
     flex: 1,
     color: '#fff',
-    marginLeft: spacing.sm,
     fontSize: 16,
     paddingVertical: spacing.sm,
+    height: 44,
+  },
+  eyeButton: {
+    padding: 10,
   },
   forgotPassword: {
     alignSelf: 'flex-end',
@@ -398,33 +398,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     flex: 1,
   },
-  circleDecoration: {
-    position: 'absolute',
-    borderRadius: 1000, // Valor alto para garantir um círculo
-    backgroundColor: '#7B4DFF',
-    opacity: 0.15,
-  },
-  gridDecoration: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  gridLine: {
-    position: 'absolute',
-    backgroundColor: 'rgba(255,255,255,0.1)',
-  },
-  horizontalLine: {
-    left: 0,
-    right: 0,
-    height: 1,
-  },
-  verticalLine: {
-    top: 0,
-    bottom: 0,
-    width: 1,
-  },
+  // Removidos elementos decorativos que estavam causando problemas visuais
   demoSimpleText: {
     color: 'rgba(255,255,255,0.6)',
     fontSize: 14,
