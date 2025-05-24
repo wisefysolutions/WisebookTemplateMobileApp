@@ -15,6 +15,7 @@ import { MotiView } from 'moti';
 import { SvgXml } from 'react-native-svg';
 import { theme } from '../theme';
 import { generateHudSVG } from '../../assets/interfaces';
+import Watermark from '../components/ui/Watermark';
 
 const { width, height } = Dimensions.get('window');
 
@@ -260,6 +261,9 @@ const OnboardingScreen = ({ navigation }) => {
         >
           {renderPagination()}
         </MotiView>
+        
+        {/* Marca d'água */}
+        <Watermark />
       </LinearGradient>
     </View>
   );

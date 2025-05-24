@@ -21,6 +21,7 @@ import { useStore } from '../store/useStore';
 import { loginUser, initializeDemoUsers } from '../services/authService';
 import { theme } from '../theme';
 import { spacing } from '../theme';
+import Watermark from '../components/ui/Watermark';
 
 const LoginScreen = ({ navigation }) => {
   const { setUser } = useStore();
@@ -211,6 +212,9 @@ const LoginScreen = ({ navigation }) => {
               </TouchableOpacity>
             </MotiView>
           </ScrollView>
+          
+          {/* Marca d'água */}
+          <Watermark />
         </KeyboardAvoidingView>
       </LinearGradient>
     </SafeAreaView>
