@@ -89,35 +89,13 @@ const LoginScreen = ({ navigation }) => {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.keyboardAvoidView}
         >
-          {/* Elementos de fundo animados */}
-          <MotiView
-            from={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 0.7, scale: 1 }}
-            transition={{ type: 'timing', duration: 1000 }}
-            style={[styles.circleDecoration, { top: '10%', left: '20%' }]}
-          />
-          
-          <MotiView
-            from={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 0.5, scale: 1 }}
-            transition={{ type: 'timing', duration: 1200, delay: 200 }}
-            style={[styles.circleDecoration, { top: '50%', right: '-20%' }]}
-          />
-          
+          {/* Elementos de fundo sutis */}
           <MotiView
             from={{ opacity: 0 }}
-            animate={{ opacity: 0.15 }}
+            animate={{ opacity: 0.1 }}
             transition={{ type: 'timing', duration: 1000 }}
-            style={styles.gridDecoration}
-          >
-            {/* Linhas de grade responsivas */}
-            {Array.from({ length: 10 }).map((_, i) => (
-              <View key={`h-line-${i}`} style={[styles.gridLine, styles.horizontalLine, { top: `${i * 10}%` }]} />
-            ))}
-            {Array.from({ length: 10 }).map((_, i) => (
-              <View key={`v-line-${i}`} style={[styles.gridLine, styles.verticalLine, { left: `${i * 10}%` }]} />
-            ))}
-          </MotiView>
+            style={[styles.circleDecoration, { top: '5%', left: '10%', width: '40%', height: '40%' }]}
+          />
           
           <ScrollView 
             contentContainerStyle={[
@@ -214,18 +192,8 @@ const LoginScreen = ({ navigation }) => {
                 </LinearGradient>
               </TouchableOpacity>
               
-              <View style={styles.orContainer}>
-                <View style={styles.orLine} />
-                <Text style={styles.orText}>OU</Text>
-                <View style={styles.orLine} />
-              </View>
-              
-              {/* Demonstração de usuários disponíveis */}
-              <View style={styles.demoContainer}>
-                <Text style={styles.demoTitle}>Usuários de demonstração:</Text>
-                <Text style={styles.demoText}>Email: demo@wisebook.app</Text>
-                <Text style={styles.demoText}>Senha: demo123</Text>
-              </View>
+              {/* Demonstração de usuários disponíveis - Versão mais sutil */}
+              <Text style={styles.demoSimpleText}>Use demo@wisebook.app / demo123 para testar</Text>
             </MotiView>
             
             <MotiView
@@ -428,11 +396,9 @@ const styles = StyleSheet.create({
   },
   circleDecoration: {
     position: 'absolute',
-    width: '60%',
-    height: '60%',
     borderRadius: 1000, // Valor alto para garantir um círculo
     backgroundColor: '#7B4DFF',
-    opacity: 0.3,
+    opacity: 0.15,
   },
   gridDecoration: {
     position: 'absolute',
@@ -454,6 +420,13 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     width: 1,
+  },
+  demoSimpleText: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: 14,
+    textAlign: 'center',
+    marginTop: spacing.md,
+    fontStyle: 'italic',
   },
 });
 

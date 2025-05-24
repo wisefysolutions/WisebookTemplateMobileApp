@@ -81,7 +81,12 @@ const OnboardingScreen = ({ navigation }) => {
   };
   
   const handleSkip = () => {
-    navigateToLogin();
+    // Chamada explícita para navegação imediata
+    console.log("Skip button pressed, navigating to Login");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
   };
   
   const handleScrollEnd = (e) => {
