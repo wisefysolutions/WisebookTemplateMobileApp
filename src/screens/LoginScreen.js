@@ -22,6 +22,7 @@ import { loginUser, initializeDemoUsers } from '../services/authService';
 import { theme } from '../theme';
 import { spacing } from '../theme';
 import Watermark from '../components/ui/Watermark';
+import TutorialMascot from '../components/ui/TutorialMascot';
 
 const LoginScreen = ({ navigation }) => {
   const { setUser } = useStore();
@@ -31,6 +32,7 @@ const LoginScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showMascot, setShowMascot] = useState(true);
   
   // Inicializar usuários de demonstração quando o componente for montado
   useEffect(() => {
@@ -92,6 +94,13 @@ const LoginScreen = ({ navigation }) => {
         >
 
           
+          {showMascot && (
+            <TutorialMascot
+              message="Welcome to Wisebook! I'm Byte, your digital learning assistant. I'll help you navigate through your knowledge journey."
+              onDismiss={() => setShowMascot(false)}
+            />
+          )}
+          
           <ScrollView 
             contentContainerStyle={[
               styles.contentContainer,
@@ -124,7 +133,7 @@ const LoginScreen = ({ navigation }) => {
                   onChangeText={setEmail}
                   autoCapitalize="none"
                   keyboardType="email-address"
-                  accessibilityLabel="Campo de email"
+                  accessibilityLabel="Email field"
                 />
               </View>
               
@@ -132,14 +141,14 @@ const LoginScreen = ({ navigation }) => {
                 <Feather name="lock" size={20} color="rgba(255,255,255,0.7)" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
-                  placeholder="Senha"
+                  placeholder="Password"
                   placeholderTextColor="rgba(255,255,255,0.7)"
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry={!showPassword}
-                  accessibilityLabel="Campo de senha"
+                  accessibilityLabel="Password field"
                 />
-                <TouchableOpacity onPress={togglePasswordVisibility} accessibilityLabel="Mostrar/esconder senha" style={styles.eyeButton}>
+                <TouchableOpacity onPress={togglePasswordVisibility} accessibilityLabel="Show/hide password" style={styles.eyeButton}>
                   <Feather 
                     name={showPassword ? "eye" : "eye-off"} 
                     size={20} 
@@ -162,16 +171,16 @@ const LoginScreen = ({ navigation }) => {
               
               <TouchableOpacity 
                 style={styles.forgotPassword}
-                accessibilityLabel="Esqueceu a senha?"
+                accessibilityLabel="Forgot password?"
               >
-                <Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text>
+                <Text style={styles.forgotPasswordText}>Forgot password?</Text>
               </TouchableOpacity>
               
               <TouchableOpacity
                 style={[styles.loginButton, isLoading && styles.loginButtonDisabled]}
                 onPress={handleLogin}
                 disabled={isLoading}
-                accessibilityLabel="Botão de login"
+                accessibilityLabel="Login button"
               >
                 <LinearGradient
                   colors={['#7B4DFF', '#5E35C8']}
@@ -182,13 +191,13 @@ const LoginScreen = ({ navigation }) => {
                   {isLoading ? (
                     <ActivityIndicator size="small" color="#fff" />
                   ) : (
-                    <Text style={styles.loginButtonText}>Entrar</Text>
+                    <Text style={styles.loginButtonText}>Log in</Text>
                   )}
                 </LinearGradient>
               </TouchableOpacity>
               
-              {/* Demonstração de usuários disponíveis - Versão mais sutil */}
-              <Text style={styles.demoSimpleText}>Use demo@wisebook.app / demo123 para testar</Text>
+              {/* Demo users information - Subtle version */}
+              <Text style={styles.demoSimpleText}>Use demo@wisebook.app / demo123 to test</Text>
             </MotiView>
             
             <MotiView
@@ -197,17 +206,17 @@ const LoginScreen = ({ navigation }) => {
               transition={{ type: 'timing', duration: 800, delay: 600 }}
               style={styles.signupContainer}
             >
-              <Text style={styles.signupText}>Não tem uma conta?</Text>
+              <Text style={styles.signupText}>Don't have an account?</Text>
               <TouchableOpacity 
                 onPress={handleSignUp}
-                accessibilityLabel="Cadastre-se"
+                accessibilityLabel="Sign up"
               >
-                <Text style={styles.signupButton}>Cadastre-se</Text>
+                <Text style={styles.signupButton}>Sign up</Text>
               </TouchableOpacity>
             </MotiView>
           </ScrollView>
           
-          {/* Marca d'água */}
+          {/* Watermark */}
           <Watermark />
         </KeyboardAvoidingView>
       </LinearGradient>
