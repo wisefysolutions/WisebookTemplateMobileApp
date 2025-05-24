@@ -39,20 +39,11 @@ const AppNavigator = () => {
   useEffect(() => {
     async function checkUserAuth() {
       try {
-        // Create a demo user automatically for testing purposes
-        const demoUser = {
-          id: '1',
-          name: 'Demo User',
-          email: 'demo@wisebook.app',
-          avatar: null,
-          level: 8,
-          xp: 320
-        };
-        
-        // Auto-login with demo user
-        setUser(demoUser);
-        await saveToStorage('user', demoUser);
-        console.log('Auto-logged in with demo user');
+        // Verificar se há um usuário salvo
+        const userData = await loadFromStorage('user');
+        if (userData) {
+          setUser(userData);
+        }
       } catch (error) {
         console.error('Error checking auth state:', error);
       } finally {
@@ -60,10 +51,7 @@ const AppNavigator = () => {
       }
     }
     
-    // Short delay before auto-login
-    setTimeout(() => {
-      checkUserAuth();
-    }, 1000);
+    checkUserAuth();
   }, []);
   
   if (loading) {
