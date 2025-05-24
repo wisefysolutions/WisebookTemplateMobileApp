@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   View, 
   Text, 
@@ -7,8 +7,6 @@ import {
   TouchableOpacity, 
   KeyboardAvoidingView, 
   Platform,
-  Image,
-  Dimensions,
   ScrollView,
   useWindowDimensions,
   ActivityIndicator
@@ -16,33 +14,48 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
-import { MotiView, MotiText } from 'moti';
+import { MotiView } from 'moti';
 import { useStore } from '../store/useStore';
-import { loginUser, initializeDemoUsers } from '../services/authService';
+import { registerUser } from '../services/authService';
 import { theme } from '../theme';
 import { spacing } from '../theme';
 
-const LoginScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation }) => {
   const { setUser } = useStore();
-  const { width, height } = useWindowDimensions(); // Responsivo a mudanças de orientação
+  const { width, height } = useWindowDimensions();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   
-  // Inicializar usuários de demonstração quando o componente for montado
-  useEffect(() => {
-    const setupDemoUsers = async () => {
-      await initializeDemoUsers();
-    };
-    
-    setupDemoUsers();
-  }, []);
+  // Adaptar layout para diferentes tamanhos de tela
+  const isTablet = width > 768;
   
-  const handleLogin = async () => {
-    if (!email || !password) {
-      setError('Por favor, preencha email e senha');
+  const handleRegister = async () => {
+    // Validações
+    if (!name || !email || !password || !confirmPassword) {
+      setError('Por favor, preencha todos os campos');
+      return;
+    }
+    
+    if (password !== confirmPassword) {
+      setError('As senhas não coincidem');
+      return;
+    }
+    
+    // Validação básica de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Por favor, insira um email válido');
+      return;
+    }
+    
+    // Validação de senha (mínimo 6 caracteres)
+    if (password.length < 6) {
+      setError('A senha deve ter pelo menos 6 caracteres');
       return;
     }
     
@@ -50,10 +63,15 @@ const LoginScreen = ({ navigation }) => {
     setError('');
     
     try {
-      // Usar o serviço de autenticação local
-      const result = await loginUser(email, password);
+      // Chamar serviço de registro
+      const result = await registerUser({
+        name,
+        email,
+        password
+      });
       
       if (result.success) {
+        // Registrado com sucesso - fazer login automático
         setUser(result.user);
         // O AppNavigator vai detectar o usuário e mostrar a interface principal
       } else {
@@ -61,23 +79,15 @@ const LoginScreen = ({ navigation }) => {
         setIsLoading(false);
       }
     } catch (error) {
-      console.error('Erro de login:', error);
-      setError('Falha no login. Tente novamente.');
+      console.error('Erro ao registrar:', error);
+      setError('Falha no registro. Tente novamente.');
       setIsLoading(false);
     }
-  };
-  
-  const handleSignUp = () => {
-    // Navegar para a tela de registro
-    navigation.navigate('Register');
   };
   
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  
-  // Adaptar layout para diferentes tamanhos de tela
-  const isTablet = width > 768;
   
   return (
     <SafeAreaView style={styles.container}>
@@ -104,13 +114,13 @@ const LoginScreen = ({ navigation }) => {
             style={[styles.circleDecoration, { top: height * 0.5, right: -width * 0.2 }]}
           />
           
+          {/* Grade de fundo */}
           <MotiView
             from={{ opacity: 0 }}
             animate={{ opacity: 0.15 }}
             transition={{ type: 'timing', duration: 1000 }}
             style={styles.gridDecoration}
           >
-            {/* Linhas de grade responsivas */}
             {Array.from({ length: 10 }).map((_, i) => (
               <View key={`h-line-${i}`} style={[styles.gridLine, styles.horizontalLine, { top: height * (i / 10) }]} />
             ))}
@@ -125,15 +135,19 @@ const LoginScreen = ({ navigation }) => {
               isTablet && styles.tabletContentContainer
             ]}
           >
-            <MotiView
-              from={{ opacity: 0, translateY: -50 }}
-              animate={{ opacity: 1, translateY: 0 }}
-              transition={{ type: 'timing', duration: 800 }}
-              style={styles.logoContainer}
-            >
-              <Text style={[styles.logoText, isTablet && styles.tabletLogoText]}>WISEBOOK</Text>
-              <Text style={[styles.tagline, isTablet && styles.tabletTagline]}>Sua Jornada de Conhecimento</Text>
-            </MotiView>
+            {/* Cabeçalho com botão de voltar */}
+            <View style={styles.header}>
+              <TouchableOpacity 
+                onPress={() => navigation.goBack()}
+                style={styles.backButton}
+                accessibilityLabel="Voltar para a tela de login"
+              >
+                <Feather name="arrow-left" size={24} color="#fff" />
+              </TouchableOpacity>
+              
+              <Text style={styles.headerTitle}>Criar Conta</Text>
+              <View style={{ width: 24 }} />
+            </View>
             
             <MotiView
               from={{ opacity: 0, translateY: 50 }}
@@ -141,6 +155,20 @@ const LoginScreen = ({ navigation }) => {
               transition={{ type: 'timing', duration: 800, delay: 300 }}
               style={[styles.formContainer, isTablet && styles.tabletFormContainer]}
             >
+              {/* Formulário de cadastro */}
+              <View style={styles.inputContainer}>
+                <Feather name="user" size={20} color="rgba(255,255,255,0.7)" />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Nome completo"
+                  placeholderTextColor="rgba(255,255,255,0.7)"
+                  value={name}
+                  onChangeText={setName}
+                  autoCapitalize="words"
+                  accessibilityLabel="Campo de nome"
+                />
+              </View>
+              
               <View style={styles.inputContainer}>
                 <Feather name="mail" size={20} color="rgba(255,255,255,0.7)" />
                 <TextInput
@@ -166,13 +194,29 @@ const LoginScreen = ({ navigation }) => {
                   secureTextEntry={!showPassword}
                   accessibilityLabel="Campo de senha"
                 />
-                <TouchableOpacity onPress={togglePasswordVisibility} accessibilityLabel="Mostrar/esconder senha">
+                <TouchableOpacity 
+                  onPress={togglePasswordVisibility}
+                  accessibilityLabel="Mostrar/esconder senha"
+                >
                   <Feather 
                     name={showPassword ? "eye" : "eye-off"} 
                     size={20} 
                     color="rgba(255,255,255,0.7)" 
                   />
                 </TouchableOpacity>
+              </View>
+              
+              <View style={styles.inputContainer}>
+                <Feather name="check-circle" size={20} color="rgba(255,255,255,0.7)" />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Confirmar senha"
+                  placeholderTextColor="rgba(255,255,255,0.7)"
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                  secureTextEntry={!showPassword}
+                  accessibilityLabel="Campo de confirmação de senha"
+                />
               </View>
               
               {error ? (
@@ -187,59 +231,49 @@ const LoginScreen = ({ navigation }) => {
                 </MotiView>
               ) : null}
               
-              <TouchableOpacity 
-                style={styles.forgotPassword}
-                accessibilityLabel="Esqueceu a senha?"
-              >
-                <Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text>
-              </TouchableOpacity>
+              {/* Termos de uso */}
+              <View style={styles.termsContainer}>
+                <Text style={styles.termsText}>
+                  Ao se cadastrar, você concorda com nossos{' '}
+                  <Text style={styles.termsLink}>Termos de Uso</Text> e{' '}
+                  <Text style={styles.termsLink}>Política de Privacidade</Text>.
+                </Text>
+              </View>
               
+              {/* Botão de cadastro */}
               <TouchableOpacity
-                style={[styles.loginButton, isLoading && styles.loginButtonDisabled]}
-                onPress={handleLogin}
+                style={[styles.registerButton, isLoading && styles.registerButtonDisabled]}
+                onPress={handleRegister}
                 disabled={isLoading}
-                accessibilityLabel="Botão de login"
+                accessibilityLabel="Botão de cadastro"
               >
                 <LinearGradient
                   colors={['#7B4DFF', '#5E35C8']}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
-                  style={styles.loginButtonGradient}
+                  style={styles.registerButtonGradient}
                 >
                   {isLoading ? (
                     <ActivityIndicator size="small" color="#fff" />
                   ) : (
-                    <Text style={styles.loginButtonText}>Entrar</Text>
+                    <Text style={styles.registerButtonText}>Criar Conta</Text>
                   )}
                 </LinearGradient>
               </TouchableOpacity>
-              
-              <View style={styles.orContainer}>
-                <View style={styles.orLine} />
-                <Text style={styles.orText}>OU</Text>
-                <View style={styles.orLine} />
-              </View>
-              
-              {/* Demonstração de usuários disponíveis */}
-              <View style={styles.demoContainer}>
-                <Text style={styles.demoTitle}>Usuários de demonstração:</Text>
-                <Text style={styles.demoText}>Email: demo@wisebook.app</Text>
-                <Text style={styles.demoText}>Senha: demo123</Text>
-              </View>
             </MotiView>
             
             <MotiView
               from={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ type: 'timing', duration: 800, delay: 600 }}
-              style={styles.signupContainer}
+              style={styles.loginContainer}
             >
-              <Text style={styles.signupText}>Não tem uma conta?</Text>
+              <Text style={styles.loginText}>Já tem uma conta?</Text>
               <TouchableOpacity 
-                onPress={handleSignUp}
-                accessibilityLabel="Cadastre-se"
+                onPress={() => navigation.navigate('Login')}
+                accessibilityLabel="Voltar para login"
               >
-                <Text style={styles.signupButton}>Cadastre-se</Text>
+                <Text style={styles.loginButton}>Entrar</Text>
               </TouchableOpacity>
             </MotiView>
           </ScrollView>
@@ -248,8 +282,6 @@ const LoginScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-// Using the actual ScrollView component from react-native
 
 const styles = StyleSheet.create({
   container: {
@@ -264,9 +296,8 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     paddingHorizontal: spacing.screenPadding,
-    paddingTop: spacing.xl,
+    paddingTop: spacing.md,
     paddingBottom: spacing.xl,
   },
   // Estilos específicos para tablets/desktop
@@ -276,26 +307,23 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '100%'
   },
-  logoContainer: {
+  header: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
     marginBottom: spacing.xl,
+    paddingVertical: spacing.sm,
   },
-  logoText: {
-    fontSize: 36,
-    fontWeight: 'bold',
+  backButton: {
+    padding: spacing.xs,
+    borderRadius: spacing.borderRadiusMedium,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+  },
+  headerTitle: {
     color: '#fff',
-    letterSpacing: 3,
-  },
-  tabletLogoText: {
-    fontSize: 48,
-  },
-  tagline: {
-    fontSize: 16,
-    color: 'rgba(255,255,255,0.8)',
-    marginTop: spacing.sm,
-  },
-  tabletTagline: {
     fontSize: 20,
+    fontWeight: 'bold',
   },
   formContainer: {
     width: '100%',
@@ -327,81 +355,49 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: spacing.sm,
   },
-  forgotPassword: {
-    alignSelf: 'flex-end',
-    marginBottom: spacing.lg,
-    padding: spacing.xs, // Área de toque maior
+  termsContainer: {
+    marginVertical: spacing.md,
   },
-  forgotPasswordText: {
-    color: 'rgba(255,255,255,0.8)',
+  termsText: {
+    color: 'rgba(255,255,255,0.7)',
     fontSize: 14,
+    textAlign: 'center',
+    lineHeight: 20,
   },
-  loginButton: {
+  termsLink: {
+    color: '#7B4DFF',
+    textDecorationLine: 'underline',
+  },
+  registerButton: {
     borderRadius: spacing.borderRadiusMedium,
     overflow: 'hidden',
-    marginBottom: spacing.lg,
+    marginVertical: spacing.md,
     width: '100%',
   },
-  loginButtonDisabled: {
+  registerButtonDisabled: {
     opacity: 0.7,
   },
-  loginButtonGradient: {
+  registerButtonGradient: {
     paddingVertical: spacing.md,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  loginButtonText: {
+  registerButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  orContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: spacing.md,
-    width: '100%',
-  },
-  orLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: 'rgba(255,255,255,0.3)',
-  },
-  orText: {
-    color: 'rgba(255,255,255,0.8)',
-    marginHorizontal: spacing.md,
-    fontSize: 14,
-  },
-  demoContainer: {
-    backgroundColor: 'rgba(255,255,255,0.1)',
-    borderRadius: spacing.borderRadiusMedium,
-    padding: spacing.md,
-    marginVertical: spacing.md,
-    width: '100%',
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
-  },
-  demoTitle: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: spacing.xs,
-  },
-  demoText: {
-    color: 'rgba(255,255,255,0.8)',
-    fontSize: 14,
-    marginVertical: 2,
-  },
-  signupContainer: {
+  loginContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: spacing.md,
   },
-  signupText: {
+  loginText: {
     color: 'rgba(255,255,255,0.8)',
     fontSize: 16,
   },
-  signupButton: {
+  loginButton: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
@@ -428,9 +424,9 @@ const styles = StyleSheet.create({
   },
   circleDecoration: {
     position: 'absolute',
-    width: width * 0.6,
-    height: width * 0.6,
-    borderRadius: width * 0.3,
+    width: '60%',
+    height: '60%',
+    borderRadius: 1000, // Valor alto para garantir um círculo
     backgroundColor: '#7B4DFF',
     opacity: 0.3,
   },
@@ -457,4 +453,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default RegisterScreen;

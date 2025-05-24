@@ -133,27 +133,41 @@ export const typography = {
   letterSpacingWide: 1,
 };
 
-// Spacing scale
+// Spacing scale - com valores responsivos baseados no tamanho da tela
 export const spacing = {
-  xs: 4,
-  sm: 8,
-  md: 16,
-  lg: 24,
-  xl: 32,
-  xxl: 48,
+  get xs() { return Math.max(4, Math.round(width * 0.01)); },
+  get sm() { return Math.max(8, Math.round(width * 0.02)); },
+  get md() { return Math.max(16, Math.round(width * 0.04)); },
+  get lg() { return Math.max(24, Math.round(width * 0.06)); },
+  get xl() { return Math.max(32, Math.round(width * 0.08)); },
+  get xxl() { return Math.max(48, Math.round(width * 0.12)); },
   
-  // Screen padding
-  screenPadding: 16,
+  // Screen padding - adaptável a diferentes tamanhos
+  get screenPadding() { 
+    return width < 600 ? this.md : width < 1200 ? this.lg : this.xl;
+  },
   
   // Component spacing
-  componentMargin: 16,
-  sectionMargin: 24,
+  get componentMargin() {
+    return width < 600 ? this.md : this.lg;
+  },
+  get sectionMargin() {
+    return width < 600 ? this.lg : this.xl;
+  },
   
   // Border radius
   borderRadiusSmall: 4,
   borderRadiusMedium: 8,
   borderRadiusLarge: 16,
   borderRadiusExtraLarge: 24,
+  
+  // Responsive grid
+  get gridGutter() {
+    return width < 600 ? this.sm : this.md;
+  },
+  get columnCount() {
+    return width < 600 ? 1 : width < 900 ? 2 : width < 1200 ? 3 : 4;
+  }
 };
 
 // Shadows
