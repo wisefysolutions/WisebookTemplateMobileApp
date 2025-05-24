@@ -16,7 +16,8 @@ export const mockContents = [
     author: {
       name: 'Dr. Alex Morgan',
       bio: 'AI researcher with 10+ years of experience at leading tech companies.'
-    }
+    },
+    topics: ['AI', 'Machine Learning', 'Neural Networks']
   },
   {
     id: 'content-2',
@@ -26,7 +27,8 @@ export const mockContents = [
     duration: '45 minutes',
     level: 'Intermediate',
     rating: 4.7,
-    xp: 80
+    xp: 80,
+    topics: ['Quantum Computing', 'Technology Trends', 'Advanced Computing']
   },
   {
     id: 'content-3',
@@ -36,7 +38,8 @@ export const mockContents = [
     duration: '8 hours',
     level: 'Advanced',
     rating: 4.9,
-    xp: 200
+    xp: 200,
+    topics: ['Data Science', 'Statistics', 'Machine Learning', 'Python']
   },
   {
     id: 'content-4',
@@ -46,7 +49,8 @@ export const mockContents = [
     duration: '3 hours',
     level: 'Beginner',
     rating: 4.6,
-    xp: 90
+    xp: 90,
+    topics: ['Mindfulness', 'Productivity', 'Mental Health']
   },
   {
     id: 'content-5',
@@ -56,7 +60,8 @@ export const mockContents = [
     duration: '5 hours',
     level: 'Intermediate',
     rating: 4.5,
-    xp: 150
+    xp: 150,
+    topics: ['Digital Marketing', 'Business', 'Social Media']
   },
   {
     id: 'content-6',
@@ -66,7 +71,8 @@ export const mockContents = [
     duration: '2 hours',
     level: 'Beginner',
     rating: 4.4,
-    xp: 100
+    xp: 100,
+    topics: ['Blockchain', 'Cryptocurrency', 'Technology']
   },
   {
     id: 'content-7',
@@ -76,7 +82,8 @@ export const mockContents = [
     duration: '3 hours',
     level: 'Beginner',
     rating: 4.8,
-    xp: 110
+    xp: 110,
+    topics: ['Learning', 'Productivity', 'Cognitive Science']
   },
   {
     id: 'content-8',
@@ -86,7 +93,8 @@ export const mockContents = [
     duration: '4 hours',
     level: 'Intermediate',
     rating: 4.7,
-    xp: 130
+    xp: 130,
+    topics: ['Psychology', 'Decision Making', 'Cognitive Biases']
   },
   {
     id: 'content-9',
@@ -96,17 +104,19 @@ export const mockContents = [
     duration: '6 hours',
     level: 'Intermediate',
     rating: 4.6,
-    xp: 160
+    xp: 160,
+    topics: ['Cybersecurity', 'Digital Safety', 'Technology']
   },
   {
     id: 'content-10',
     title: 'Leadership in the Digital Age',
-    description: 'Develop the skills needed to lead teams in today's rapidly changing technological landscape.',
+    description: 'Develop the skills needed to lead teams in today\'s rapidly changing technological landscape.',
     type: 'video',
     duration: '90 minutes',
     level: 'Advanced',
     rating: 4.9,
-    xp: 170
+    xp: 170,
+    topics: ['Leadership', 'Management', 'Digital Transformation']
   }
 ];
 
@@ -298,7 +308,7 @@ export const mockCommunityPosts = [
           name: 'Maya Singh',
           level: 8
         },
-        content: 'I'm starting that path next week! Any tips?',
+        content: 'I am starting that path next week! Any tips?',
         timestamp: '2023-12-28T15:45:00Z'
       },
       {
@@ -307,7 +317,7 @@ export const mockCommunityPosts = [
           name: 'Alex Chen',
           level: 12
         },
-        content: 'Definitely focus on the practical exercises and don't rush through the math sections, they're important for later modules!',
+        content: 'Definitely focus on the practical exercises and do not rush through the math sections, they are important for later modules!',
         timestamp: '2023-12-28T16:20:00Z'
       }
     ]
@@ -318,7 +328,7 @@ export const mockCommunityPosts = [
       name: 'Jordan Taylor',
       level: 15
     },
-    content: 'Has anyone taken the Blockchain Innovation path? I'm curious about how practical the content is for real-world applications.',
+    content: 'Has anyone taken the Blockchain Innovation path? I am curious about how practical the content is for real-world applications.',
     type: 'question',
     timestamp: '2023-12-27T10:15:00Z',
     likes: 8,
@@ -330,7 +340,7 @@ export const mockCommunityPosts = [
       name: 'Dr. Sarah Williams',
       level: 20
     },
-    content: 'Excited to announce that I'll be hosting a live Q&A session next Tuesday on "The Future of AI in Healthcare." Join me to discuss how AI is transforming patient care and medical research!',
+    content: 'Excited to announce that I will be hosting a live Q&A session next Tuesday on "The Future of AI in Healthcare." Join me to discuss how AI is transforming patient care and medical research!',
     type: 'announcement',
     timestamp: '2023-12-26T09:00:00Z',
     likes: 42,
@@ -341,7 +351,7 @@ export const mockCommunityPosts = [
           name: 'Michael Johnson',
           level: 10
         },
-        content: 'Looking forward to this! Will it be recorded for those who can't attend live?',
+        content: 'Looking forward to this! Will it be recorded for those who cannot attend live?',
         timestamp: '2023-12-26T09:45:00Z'
       }
     ]
@@ -364,7 +374,7 @@ export const mockCommunityPosts = [
       name: 'Carlos Rodriguez',
       level: 11
     },
-    content: 'Does anyone have recommendations for resources on quantum computing beyond what's covered in the Future of Quantum Computing video? I'm particularly interested in quantum algorithms.',
+    content: 'Does anyone have recommendations for resources on quantum computing beyond what is covered in the Future of Quantum Computing video? I am particularly interested in quantum algorithms.',
     type: 'question',
     timestamp: '2023-12-24T13:10:00Z',
     likes: 7,
