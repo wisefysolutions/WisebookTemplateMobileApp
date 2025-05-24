@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Feather } from '@expo/vector-icons';
 import { MotiView } from 'moti';
@@ -26,23 +26,11 @@ const FuturisticCard = ({ item, onPress, style }) => {
     }
   };
   
-  return (
-    <MotiView
-      style={[styles.container, style]}
-      from={{ scale: 0.95, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{
-        type: 'timing',
-        duration: 500,
-      }}
-    >
-      <LinearGradient
-        colors={[theme[themeMode].cardGradientStart, theme[themeMode].cardGradientEnd]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradientBackground}
-      >
-        <View style={styles.content}>
+  const cardContent = (
+    <>
+      <View style={styles.mainContainer}>
+        {/* Top section with icon and text */}
+        <View style={styles.contentTop}>
           <View style={styles.iconContainer}>
             <Feather name={getContentIcon()} size={24} color="#fff" />
           </View>
@@ -73,24 +61,6 @@ const FuturisticCard = ({ item, onPress, style }) => {
             </View>
           </View>
           
-          {item.progress !== undefined && (
-            <View style={styles.progressContainer}>
-              <View style={styles.progressBar}>
-                <View 
-                  style={[
-                    styles.progressIndicator,
-                    { width: `${item.progress * 100}%` }
-                  ]}
-                />
-              </View>
-              {item.progress > 0 && (
-                <Text style={styles.progressText}>
-                  {Math.round(item.progress * 100)}%
-                </Text>
-              )}
-            </View>
-          )}
-          
           {item.xp && (
             <View style={styles.xpContainer}>
               <Text style={styles.xpText}>+{item.xp} XP</Text>
@@ -98,13 +68,67 @@ const FuturisticCard = ({ item, onPress, style }) => {
           )}
         </View>
         
-        <View style={styles.glowEffect} />
-        
-        <View style={styles.cardDecoration}>
-          <View style={styles.decorationLine} />
-          <View style={styles.decorationCircle} />
-        </View>
-      </LinearGradient>
+        {/* Bottom section with progress bar */}
+        {item.progress !== undefined && (
+          <View style={styles.progressContainer}>
+            <View style={styles.progressBar}>
+              <View 
+                style={[
+                  styles.progressIndicator,
+                  { width: `${item.progress * 100}%` }
+                ]}
+              />
+            </View>
+            {item.progress > 0 && (
+              <Text style={styles.progressText}>
+                {Math.round(item.progress * 100)}%
+              </Text>
+            )}
+          </View>
+        )}
+      </View>
+      
+      {/* Visual decorations */}
+      <View style={styles.glowEffect} />
+      
+      <View style={styles.cardDecoration}>
+        <View style={styles.decorationLine} />
+        <View style={styles.decorationCircle} />
+      </View>
+    </>
+  );
+  
+  return (
+    <MotiView
+      style={[styles.container, style]}
+      from={{ scale: 0.95, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{
+        type: 'timing',
+        duration: 500,
+      }}
+    >
+      {onPress ? (
+        <TouchableOpacity activeOpacity={0.8} onPress={() => onPress(item)}>
+          <LinearGradient
+            colors={[theme[themeMode].cardGradientStart, theme[themeMode].cardGradientEnd]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.gradientBackground}
+          >
+            {cardContent}
+          </LinearGradient>
+        </TouchableOpacity>
+      ) : (
+        <LinearGradient
+          colors={[theme[themeMode].cardGradientStart, theme[themeMode].cardGradientEnd]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.gradientBackground}
+        >
+          {cardContent}
+        </LinearGradient>
+      )}
     </MotiView>
   );
 };
@@ -123,8 +147,14 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
   },
-  content: {
+  mainContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: 120, // Garantir altura mínima para os cartões
+  },
+  contentTop: {
     flexDirection: 'row',
+    marginBottom: 30, // Espaço aumentado para a barra de progresso
   },
   iconContainer: {
     width: 48,
@@ -137,7 +167,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    marginBottom: 12, // Add bottom margin to create space for progress bar
+    paddingBottom: 8, // Espaço adicional abaixo do texto
   },
   title: {
     fontSize: 18,
@@ -149,6 +179,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'rgba(255,255,255,0.8)',
     marginBottom: 8,
+    minHeight: 40, // Garantir altura mínima para a descrição
   },
   metaContainer: {
     flexDirection: 'row',
@@ -166,13 +197,13 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   progressContainer: {
+    width: '100%',
+    marginTop: 8,
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 16,
-    paddingBottom: 12,
-    marginTop: 60, // Added margin to move it below the text
+    paddingHorizontal: 0,
   },
   progressBar: {
     height: 4,
@@ -193,7 +224,7 @@ const styles = StyleSheet.create({
   xpContainer: {
     position: 'absolute',
     top: 0,
-    right: 16,
+    right: 0,
     backgroundColor: 'rgba(255,255,255,0.2)',
     paddingHorizontal: 8,
     paddingVertical: 4,
