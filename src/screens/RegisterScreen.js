@@ -104,14 +104,14 @@ const RegisterScreen = ({ navigation }) => {
             from={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 0.7, scale: 1 }}
             transition={{ type: 'timing', duration: 1000 }}
-            style={[styles.circleDecoration, { top: height * 0.1, left: width * 0.2 }]}
+            style={[styles.circleDecoration, { top: '10%', left: '20%' }]}
           />
           
           <MotiView
             from={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 0.5, scale: 1 }}
             transition={{ type: 'timing', duration: 1200, delay: 200 }}
-            style={[styles.circleDecoration, { top: height * 0.5, right: -width * 0.2 }]}
+            style={[styles.circleDecoration, { top: '50%', right: '-20%' }]}
           />
           
           {/* Grade de fundo */}
@@ -122,10 +122,10 @@ const RegisterScreen = ({ navigation }) => {
             style={styles.gridDecoration}
           >
             {Array.from({ length: 10 }).map((_, i) => (
-              <View key={`h-line-${i}`} style={[styles.gridLine, styles.horizontalLine, { top: height * (i / 10) }]} />
+              <View key={`h-line-${i}`} style={[styles.gridLine, styles.horizontalLine, { top: `${i * 10}%` }]} />
             ))}
             {Array.from({ length: 10 }).map((_, i) => (
-              <View key={`v-line-${i}`} style={[styles.gridLine, styles.verticalLine, { left: width * (i / 10) }]} />
+              <View key={`v-line-${i}`} style={[styles.gridLine, styles.verticalLine, { left: `${i * 10}%` }]} />
             ))}
           </MotiView>
           

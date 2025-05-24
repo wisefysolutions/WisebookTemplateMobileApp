@@ -94,14 +94,14 @@ const LoginScreen = ({ navigation }) => {
             from={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 0.7, scale: 1 }}
             transition={{ type: 'timing', duration: 1000 }}
-            style={[styles.circleDecoration, { top: height * 0.1, left: width * 0.2 }]}
+            style={[styles.circleDecoration, { top: '10%', left: '20%' }]}
           />
           
           <MotiView
             from={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 0.5, scale: 1 }}
             transition={{ type: 'timing', duration: 1200, delay: 200 }}
-            style={[styles.circleDecoration, { top: height * 0.5, right: -width * 0.2 }]}
+            style={[styles.circleDecoration, { top: '50%', right: '-20%' }]}
           />
           
           <MotiView
@@ -112,10 +112,10 @@ const LoginScreen = ({ navigation }) => {
           >
             {/* Linhas de grade responsivas */}
             {Array.from({ length: 10 }).map((_, i) => (
-              <View key={`h-line-${i}`} style={[styles.gridLine, styles.horizontalLine, { top: height * (i / 10) }]} />
+              <View key={`h-line-${i}`} style={[styles.gridLine, styles.horizontalLine, { top: `${i * 10}%` }]} />
             ))}
             {Array.from({ length: 10 }).map((_, i) => (
-              <View key={`v-line-${i}`} style={[styles.gridLine, styles.verticalLine, { left: width * (i / 10) }]} />
+              <View key={`v-line-${i}`} style={[styles.gridLine, styles.verticalLine, { left: `${i * 10}%` }]} />
             ))}
           </MotiView>
           
@@ -428,9 +428,9 @@ const styles = StyleSheet.create({
   },
   circleDecoration: {
     position: 'absolute',
-    width: width * 0.6,
-    height: width * 0.6,
-    borderRadius: width * 0.3,
+    width: '60%',
+    height: '60%',
+    borderRadius: 1000, // Valor alto para garantir um círculo
     backgroundColor: '#7B4DFF',
     opacity: 0.3,
   },
