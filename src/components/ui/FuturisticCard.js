@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
+    marginBottom: 12, // Add bottom margin to create space for progress bar
   },
   title: {
     fontSize: 18,
@@ -171,6 +172,7 @@ const styles = StyleSheet.create({
     right: 0,
     paddingHorizontal: 16,
     paddingBottom: 12,
+    marginTop: 60, // Added margin to move it below the text
   },
   progressBar: {
     height: 4,
