@@ -2,7 +2,10 @@ import OpenAI from 'openai';
 import { mockContents, mockUserStats, mockPaths } from '../data/mockData';
 
 // Initialize OpenAI client
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || 'sk-demo-key' });
+const openai = new OpenAI({ 
+  apiKey: process.env.OPENAI_API_KEY || 'sk-demo-key',
+  dangerouslyAllowBrowser: true // Enable browser usage
+});
 
 // Helper function to get user's learning history and preferences
 const getUserLearningProfile = async (userId) => {
