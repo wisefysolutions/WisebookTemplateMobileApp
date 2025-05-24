@@ -63,14 +63,21 @@ const OnboardingScreen = ({ navigation }) => {
   
   const handleNext = () => {
     if (currentIndex < onboardingData.length - 1) {
-      flatListRef.current.scrollToIndex({ index: currentIndex + 1 });
+      flatListRef.current?.scrollToIndex({ index: currentIndex + 1, animated: true });
+      setCurrentIndex(currentIndex + 1);
     } else {
-      navigation.navigate('Login');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }],
+      });
     }
   };
   
   const handleSkip = () => {
-    navigation.navigate('Login');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
   };
   
   const handleScrollEnd = (e) => {
@@ -196,12 +203,12 @@ const OnboardingScreen = ({ navigation }) => {
             from={{ opacity: 0 }}
             animate={{ opacity: 0.2 }}
             transition={{ type: 'timing', duration: 1000 }}
-            style={[styles.decoration, { top: height * 0.2, left: -width * 0.2 }]}
+            style={[styles.decoration, { top: '20%', left: '-20%' }]}
           >
             <SvgXml
               xml={generateHudSVG({ 
-                width: width * 0.4, 
-                height: width * 0.4, 
+                width: 160, 
+                height: 160, 
                 type: 'circleIndicator' 
               })}
             />
@@ -211,12 +218,12 @@ const OnboardingScreen = ({ navigation }) => {
             from={{ opacity: 0 }}
             animate={{ opacity: 0.15 }}
             transition={{ type: 'timing', duration: 1000, delay: 200 }}
-            style={[styles.decoration, { bottom: height * 0.2, right: -width * 0.2 }]}
+            style={[styles.decoration, { bottom: '20%', right: '-20%' }]}
           >
             <SvgXml
               xml={generateHudSVG({ 
-                width: width * 0.4, 
-                height: width * 0.4, 
+                width: 160, 
+                height: 160, 
                 type: 'circleIndicator' 
               })}
             />
@@ -230,16 +237,16 @@ const OnboardingScreen = ({ navigation }) => {
           >
             {/* Grid lines */}
             {Array.from({ length: 10 }).map((_, i) => (
-              <View key={`h-line-${i}`} style={[styles.gridLine, styles.horizontalLine, { top: height * (i / 10) }]} />
+              <View key={`h-line-${i}`} style={[styles.gridLine, styles.horizontalLine, { top: `${i * 10}%` }]} />
             ))}
             {Array.from({ length: 10 }).map((_, i) => (
-              <View key={`v-line-${i}`} style={[styles.gridLine, styles.verticalLine, { left: width * (i / 10) }]} />
+              <View key={`v-line-${i}`} style={[styles.gridLine, styles.verticalLine, { left: `${i * 10}%` }]} />
             ))}
           </MotiView>
         </View>
         
         {/* Content */}
-        <Animated.FlatList
+        <FlatList
           ref={flatListRef}
           data={onboardingData}
           renderItem={renderOnboardingItem}
@@ -249,11 +256,17 @@ const OnboardingScreen = ({ navigation }) => {
           showsHorizontalScrollIndicator={false}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-            { useNativeDriver: true }
+            { useNativeDriver: false }
           )}
           onMomentumScrollEnd={handleScrollEnd}
           bounces={false}
           style={styles.flatList}
+          contentContainerStyle={{ alignItems: 'center' }}
+          getItemLayout={(data, index) => ({
+            length: Dimensions.get('window').width,
+            offset: Dimensions.get('window').width * index,
+            index,
+          })}
         />
         
         {/* Bottom Controls */}
@@ -327,14 +340,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   slideContainer: {
-    width,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   slideContent: {
     alignItems: 'center',
     paddingHorizontal: 40,
-    width: width * 0.9,
+    width: '90%',
   },
   iconContainer: {
     width: 120,
