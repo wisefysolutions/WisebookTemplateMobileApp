@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, Dimensions } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, Dimensions, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { MotiView } from 'moti';
 import { LinearGradient } from 'expo-linear-gradient';

@@ -1,0 +1,94 @@
+
+package.json (6:5)
+'expo-font@^13.3.1' is not the recommended version for SDK 52.0.0.
+Update to ~13.0.4
+package.json (7:5)
+'expo-status-bar@^2.2.3' is not the recommended version for SDK 52.0.0.
+Update to ~2.0.1
+package.json (8:5)
+'react-native-svg@^15.12.0' is not the recommended version for SDK 52.0.0.
+Update to 15.8.0
+package.json (9:5)
+'@expo/vector-icons@^14.1.0' is not the recommended version for SDK 52.0.0.
+Update to ^14.0.2
+package.json (10:5)
+'expo-splash-screen@^0.30.8' is not the recommended version for SDK 52.0.0.
+Update to ~0.29.23
+package.json (11:5)
+'@expo/metro-runtime@~5.0.4' is not the recommended version for SDK 52.0.0.
+Update to ~4.0.1
+package.json (12:5)
+Failed to resolve dependency 'react-native-dotenv@^3.4.11' (Cannot resolve module crypto after installing it as a dependency)
+Retry
+package.json (13:5)
+'expo-linear-gradient@^14.1.4' is not the recommended version for SDK 52.0.0.
+Update to ~14.0.2
+package.json (15:5)
+'react-native-reanimated@^3.17.5' is not the recommended version for SDK 52.0.0.
+Update to ~3.16.1
+package.json (17:5)
+'react-native-gesture-handler@^2.25.0' is not the recommended version for SDK 52.0.0.
+Update to ~2.20.2
+package.json (19:5)
+'react-native-safe-area-context@^5.4.1' is not the recommended version for SDK 52.0.0.
+Update to 4.12.0
+package.json (20:5)
+'@react-native-async-storage/async-storage@^2.1.2' is not the recommended version for SDK 52.0.0.
+Update to 1.23.1
+package.json (4:5)
+'openai' requires peer-dependency 'ws'.
+Add dependency
+package.json (4:5)
+'openai' requires peer-dependency 'zod'.
+Add dependency
+package.json (5:5)
+'zustand' requires peer-dependency '@types/react'.
+Add dependency
+package.json (5:5)
+'zustand' requires peer-dependency 'immer'.
+Add dependency
+package.json (5:5)
+'zustand' requires peer-dependency 'use-sync-external-store'.
+Add dependency
+package.json (14:5)
+'@react-navigation/stack,@react-navigation/bottom-tabs' requires peer-dependency 'react-native-screens'.
+Add dependency
+App.js (42:6)
+React Hook useEffect has missing dependencies: 'setThemeMode' and 'setUser'. Either include them or remove the dependency array. (react-hooks/exhaustive-deps)
+(ESLint)
+src/components/ui/AnimatedButton.js (95:14)
+'View' is not defined. (react/jsx-no-undef)
+(ESLint)
+src/components/ui/AnimatedButton.js (96:16)
+'View' is not defined. (react/jsx-no-undef)
+(ESLint)
+src/components/ui/AnimatedButton.js (97:16)
+'View' is not defined. (react/jsx-no-undef)
+(ESLint)
+src/components/ui/ProgressIndicator.js (36:6)
+React Hook useEffect has a missing dependency: 'animatedProgress'. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)
+(ESLint)
+src/navigation/AppNavigator.js (55:6)
+React Hook useEffect has a missing dependency: 'setUser'. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)
+(ESLint)
+src/screens/LoginScreen.js (339:3)
+Unused style detected: styles.orContainer (react-native/no-unused-styles)
+(ESLint)
+src/screens/LoginScreen.js (345:3)
+Unused style detected: styles.orLine (react-native/no-unused-styles)
+(ESLint)
+src/screens/LoginScreen.js (350:3)
+Unused style detected: styles.orText (react-native/no-unused-styles)
+(ESLint)
+src/screens/LoginScreen.js (355:3)
+Unused style detected: styles.demoContainer (react-native/no-unused-styles)
+(ESLint)
+src/screens/LoginScreen.js (364:3)
+Unused style detected: styles.demoTitle (react-native/no-unused-styles)
+(ESLint)
+src/screens/LoginScreen.js (370:3)
+Unused style detected: styles.demoText (react-native/no-unused-styles)
+(ESLint)
+src/screens/LibraryScreen.js (43:6)
+React Hook useEffect has a missing dependency: 'filterContent'. Either include it or remove the dependency array. (react-hooks/exhaustive-deps)
+(ESLint)
