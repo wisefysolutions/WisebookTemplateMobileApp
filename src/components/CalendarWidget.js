@@ -136,7 +136,7 @@ const CalendarWidget = ({ onEventPress, style }) => {
               >
                 <View style={[styles.eventTimeContainer, { backgroundColor: theme[themeMode].accent }]}>
                   <Text style={styles.eventTimeText}>
-                    {event.time.replace(':', '\n').replace(' ', '\n')}
+                    {event.timeDisplay || event.time}
                   </Text>
                 </View>
                 

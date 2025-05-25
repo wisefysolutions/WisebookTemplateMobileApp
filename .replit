@@ -19,13 +19,17 @@ args = "Wisebook App Server"
 task = "workflow.run"
 args = "Fix and Run App"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Interactive Setup"
+
 [[workflows.workflow]]
 name = "Wisebook App Server"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd /home/runner/workspace && SKIP_PREFLIGHT_CHECK=true EXPO_NO_TYPESCRIPT_SETUP=1 npx expo start --web --port 5000 --no-dev"
+args = "cd /home/runner/workspace && NODE_ENV=production EXPO_NO_TYPESCRIPT_SETUP=1 SKIP_PREFLIGHT_CHECK=true npx expo start --web --port 5000 --no-dev"
 waitForPort = 5000
 
 [[workflows.workflow]]
@@ -37,8 +41,17 @@ task = "shell.exec"
 args = "cd /home/runner/workspace && rm -rf node_modules && npm install --force && npx expo start --web --port 5000 --no-dev"
 waitForPort = 5000
 
+[[workflows.workflow]]
+name = "Interactive Setup"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd /home/runner/workspace && npm install --legacy-peer-deps && EXPO_NO_TYPESCRIPT_SETUP=1 SKIP_PREFLIGHT_CHECK=true npx expo start --web --port 5000"
+waitForPort = 5000
+
 [deployment]
-run = ["sh", "-c", "cd /home/runner/workspace && SKIP_PREFLIGHT_CHECK=true EXPO_NO_TYPESCRIPT_SETUP=1 npx expo start --web --port 5000 --no-dev"]
+run = ["sh", "-c", "cd /home/runner/workspace && NODE_ENV=production EXPO_NO_TYPESCRIPT_SETUP=1 SKIP_PREFLIGHT_CHECK=true npx expo start --web --port 5000 --no-dev"]
 
 [[ports]]
 localPort = 5000
