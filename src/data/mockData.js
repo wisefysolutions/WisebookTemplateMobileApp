@@ -437,7 +437,7 @@ export const mockEvents = [
     id: 'event-1',
     title: 'Live Q&A: Future of AI in Healthcare',
     date: new Date(new Date().setDate(new Date().getDate() + 1)),
-    time: '11:00 AM',
+    time: '11AM',
     type: 'live',
     duration: '1 hour'
   },
@@ -445,7 +445,7 @@ export const mockEvents = [
     id: 'event-2',
     title: 'Scheduled Learning: Neural Networks',
     date: new Date(),
-    time: '3:00PM',
+    time: '3PM',
     type: 'lesson',
     duration: '45 min'
   },
@@ -453,7 +453,7 @@ export const mockEvents = [
     id: 'event-3',
     title: 'Weekly Quiz: Data Analysis',
     date: new Date(new Date().setDate(new Date().getDate() + 2)),
-    time: '10:00 AM',
+    time: '10AM',
     type: 'quiz',
     duration: '30 min'
   },
@@ -461,7 +461,7 @@ export const mockEvents = [
     id: 'event-4',
     title: 'Path Checkpoint: Blockchain Basics',
     date: new Date(new Date().setDate(new Date().getDate() + 3)),
-    time: '2:00 PM',
+    time: '2PM',
     type: 'deadline',
     duration: '1 hour'
   },
@@ -469,7 +469,7 @@ export const mockEvents = [
     id: 'event-5',
     title: 'Community Discussion: Ethical AI',
     date: new Date(new Date().setDate(new Date().getDate() + 4)),
-    time: '4:00 PM',
+    time: '4PM',
     type: 'discussion',
     duration: '1.5 hours'
   }

@@ -5,6 +5,7 @@ import { MotiView } from 'moti';
 import { useStore } from '../store/useStore';
 import { theme } from '../theme';
 import { getUpcomingEvents } from '../services/api';
+import TimeDisplay from './ui/TimeDisplay';
 
 // Helper to generate days of the week
 const getDaysOfWeek = () => {
@@ -134,7 +135,7 @@ const CalendarWidget = ({ onEventPress, style }) => {
                 onPress={() => onEventPress && onEventPress(event)}
               >
                 <View style={[styles.eventTimeContainer, { backgroundColor: theme[themeMode].accent }]}>
-                  <Text style={styles.eventTimeText}>{event.time.replace(':', '\n')}</Text>
+                  <Text style={styles.eventTimeText}>{event.time}</Text>
                 </View>
                 
                 <View style={styles.eventDetails}>
