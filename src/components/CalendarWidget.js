@@ -134,7 +134,7 @@ const CalendarWidget = ({ onEventPress, style }) => {
                 onPress={() => onEventPress && onEventPress(event)}
               >
                 <View style={[styles.eventTimeContainer, { backgroundColor: theme[themeMode].accent }]}>
-                  <Text style={styles.eventTimeText}>{event.time}</Text>
+                  <Text style={styles.eventTimeText}>{event.time.replace(':', '\n')}</Text>
                 </View>
                 
                 <View style={styles.eventDetails}>
@@ -252,17 +252,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   eventTimeContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 10,
+    width: 70,
+    height: 70,
+    borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: 16,
+    padding: 4,
   },
   eventTimeText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 14,
+    textAlign: 'center',
+    lineHeight: 22,
   },
   eventDetails: {
     flex: 1,
